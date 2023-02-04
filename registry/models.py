@@ -20,7 +20,8 @@ class Guestlist(models.Model):
 #     bought = models.BooleanField()
 #     slug = models.SlugField()
 #     guestlist = models.ForeignKey(Guestlist, on_delete=models.CASCADE)
-    # picture = models.ImageField (optional)
+#     picture = models.ImageField 
+    # (optional)
 
 # one guest to song choice
 # class Song_choice(models.Model):
@@ -33,7 +34,7 @@ class Guestlist(models.Model):
 #     title = models.CharField(max_length=50)
 #     musician = models.CharField(max_length=50)
 
-# class Task_list(models.Model):
-#     title = models.CharField(max_length=50)
-#     description = models.TextField()
-#     completed = models.BooleanField()
+class To_do(models.Model):
+    title = models.CharField(max_length=50)
+    description = models.TextField()
+    completed = models.BooleanField(null=True)
