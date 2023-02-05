@@ -6,11 +6,11 @@ class Guestlist(models.Model):
     plus_one = models.CharField(max_length=50)
     rsvp = models.BooleanField(null=True)
 
-# many to many guest to meal
-# class Meal(models.Model):
-#     title = models.CharField(max_length=50)
-#     allergens = models.CharField(max_length=50)
-#     guestlist = models.ManyToManyField(Guestlist)
+# many to many guest to cuisine
+class Cuisine(models.Model):
+    title = models.CharField(max_length=50)
+    allergens = models.CharField(max_length=50)
+    guestlist = models.ManyToManyField(Guestlist)
     
 # one to many- user may buy one or many gifts
 # class Gift(models.Model):

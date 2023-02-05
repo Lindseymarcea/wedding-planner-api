@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import Guestlist, To_do
-# Meal, Gift, Song_choice
+from .models import Guestlist, To_do, Cuisine
+# Gift, Song_choice
 
 
 class GuestlistSerializer(serializers.ModelSerializer):
@@ -8,10 +8,10 @@ class GuestlistSerializer(serializers.ModelSerializer):
         model = Guestlist
         fields = '__all__'
 
-# class MealSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Meal
-#         fields = '__all__'
+class CuisineSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cuisine
+        fields = '__all__'
 
 # class GiftSerializer(serializers.ModelSerializer):
 #     class Meta:

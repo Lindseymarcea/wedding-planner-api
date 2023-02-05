@@ -3,8 +3,8 @@ from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-from .models import Guestlist, To_do
-from .serializers import GuestlistSerializer, To_doSerializer
+from .models import Guestlist, To_do, Cuisine
+from .serializers import GuestlistSerializer, To_doSerializer, CuisineSerializer
 
 def say_hello(request):
     return HttpResponse('Hello World')
@@ -81,4 +81,38 @@ def to_do_detail(request, pk):
         to_do.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+# Cuisine
+@api_view(['GET', 'POST'])
+def cuisine_list(request):
+    if request.method == 'GET':
+        data = Cuisine.objects.all()
 
+        serializer = CuisineSerializer(data, context={'request': request}, many=True)
+
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = CuisineSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PUT', 'DELETE'])
+def cuisine_detail(request, pk):
+    try:
+        cuisine = Cuisine.objects.get(pk=pk)
+    except Cuisine.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
+        serializer = CuisineSerializer(cuisine, data=request.data,context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        cuisine.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
