@@ -3,11 +3,8 @@ from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-from .models import Guestlist, To_do, Cuisine
-from .serializers import GuestlistSerializer, To_doSerializer, CuisineSerializer
-
-def say_hello(request):
-    return HttpResponse('Hello World')
+from .models import Guestlist, To_do, Cuisine, Song_choice
+from .serializers import GuestlistSerializer, To_doSerializer, CuisineSerializer, Song_choiceSerializer
 
 @api_view(['GET', 'POST'])
 def guestlists_list(request):
@@ -115,4 +112,40 @@ def cuisine_detail(request, pk):
 
     elif request.method == 'DELETE':
         cuisine.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+# Song_choice
+@api_view(['GET', 'POST'])
+def song_choice_list(request):
+    if request.method == 'GET':
+        data = Song_choice.objects.all()
+
+        serializer = Song_choiceSerializer(data, context={'request': request}, many=True)
+
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = Song_choiceSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PUT', 'DELETE'])
+def song_choice_detail(request, pk):
+    try:
+        song_choice = Song_choice.objects.get(pk=pk)
+    except Song_choice.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
+        serializer = Song_choiceSerializer(song_choice, data=request.data,context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        song_choice.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

@@ -24,15 +24,15 @@ class Cuisine(models.Model):
     # (optional)
 
 # one guest to song choice
-# class Song_choice(models.Model):
-#     guestlist = models.OneToOneField(
-#         Guestlist,
-#         on_delete=models.CASCADE,
-#         prinary_key=True
-#     )
+class Song_choice(models.Model):
+    guestlist = models.OneToOneField(
+        Guestlist,
+        on_delete=models.CASCADE,
+        # prinary_key=True
+    )
 
-#     title = models.CharField(max_length=50)
-#     musician = models.CharField(max_length=50)
+    title = models.CharField(max_length=50)
+    musician = models.CharField(max_length=50)
 
 class To_do(models.Model):
     title = models.CharField(max_length=50)

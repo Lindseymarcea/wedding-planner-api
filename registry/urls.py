@@ -11,7 +11,6 @@ urlpatterns = [
     path('to_do_detail/<str:pk>/', views.to_do_detail, name="to_do_detail"),
     path('cuisine/', views.cuisine_list),
     path('cuisine_detail/<str:pk>/', views.cuisine_detail, name="cuisine_detail"),
-    # path('recommendations/', views.music_recs),
-    # path('upload/', views.upload),
-    # path('hello/', views.say_hello)
+    path('song_choice/', views.song_choice_list),
+    path('song_choice_detail/<str:pk>/', views.song_choice_detail, name="song_choice_detail"),
 ]
