@@ -13,4 +13,6 @@ urlpatterns = [
     path('cuisine_detail/<str:pk>/', views.cuisine_detail, name="cuisine_detail"),
     path('song_choice/', views.song_choice_list),
     path('song_choice_detail/<str:pk>/', views.song_choice_detail, name="song_choice_detail"),
+    path('gift/', views.gift_list),
+    path('gift_detail/<str:pk>/', views.gift_detail, name="gift_detail")
 ]

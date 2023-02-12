@@ -13,22 +13,19 @@ class Cuisine(models.Model):
     guestlist = models.ManyToManyField(Guestlist)
     
 # one to many- user may buy one or many gifts
-# class Gift(models.Model):
-#     title = models.CharField(max_length=50)
-#     description = models.TextField()
-#     price = models.DecimalField()
-#     bought = models.BooleanField()
-#     slug = models.SlugField()
-#     guestlist = models.ForeignKey(Guestlist, on_delete=models.CASCADE)
-#     picture = models.ImageField 
-    # (optional)
+class Gift(models.Model):
+    title = models.CharField(max_length=50)
+    description = models.TextField()
+    price = models.DecimalField(max_digits = 5, decimal_places = 2)
+    link = models.URLField()
+    bought = models.BooleanField()
+    guestlist = models.ForeignKey(Guestlist, on_delete=models.CASCADE)
 
 # one guest to song choice
 class Song_choice(models.Model):
     guestlist = models.OneToOneField(
         Guestlist,
         on_delete=models.CASCADE,
-        # prinary_key=True
     )
 
     title = models.CharField(max_length=50)

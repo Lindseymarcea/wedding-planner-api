@@ -3,8 +3,8 @@ from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-from .models import Guestlist, To_do, Cuisine, Song_choice
-from .serializers import GuestlistSerializer, To_doSerializer, CuisineSerializer, Song_choiceSerializer
+from .models import Guestlist, To_do, Cuisine, Song_choice, Gift
+from .serializers import GuestlistSerializer, To_doSerializer, CuisineSerializer, Song_choiceSerializer, GiftSerializer
 
 @api_view(['GET', 'POST'])
 def guestlists_list(request):
@@ -148,4 +148,40 @@ def song_choice_detail(request, pk):
 
     elif request.method == 'DELETE':
         song_choice.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+# Gift
+@api_view(['GET', 'POST'])
+def gift_list(request):
+    if request.method == 'GET':
+        data = Gift.objects.all()
+
+        gift = GiftSerializer(data, context={'request': request}, many=True)
+
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = GiftSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PUT', 'DELETE'])
+def gift_detail(request, pk):
+    try:
+        gift = Gift.objects.get(pk=pk)
+    except Gift.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
+        serializer = GiftSerializer(gift, data=request.data,context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        gift.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
