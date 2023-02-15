@@ -23,10 +23,10 @@ class Gift(models.Model):
 
 # one guest to song choice
 class Song_choice(models.Model):
-    guestlist = models.OneToOneField(
-        Guestlist,
-        on_delete=models.CASCADE,
-    )
+    # guestlist = models.OneToOneField(
+    #     Guestlist,
+    #     on_delete=models.CASCADE,
+    # )
 
     title = models.CharField(max_length=50)
     musician = models.CharField(max_length=50)
